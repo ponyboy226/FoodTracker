@@ -8,8 +8,8 @@ import datetime
 
 
 # Allows you to easily change the file or directory for this food journal
-directory = '/Users/tonygardella/Desktop/pythonCoding/'
-filename = 'csv.csv'
+directory = '~/pythonCoding/'
+filename = 'tracker.csv'
 fullPath = directory + filename
 KEY = 'GLUTENFREE,FOOD,NOTES,TIME,REACTION'
 
