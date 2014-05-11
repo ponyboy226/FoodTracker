@@ -1,6 +1,5 @@
 import csv
 import sys
-from xml.etree.ElementTree import parse
 import time
 import os
 import datetime
@@ -71,7 +70,7 @@ def add():
         # Get the user's input and data
         status = raw_input('Is this supposed to be Gluten Free?: ').lower()
         reaction = raw_input('Did you have a negative reaction?  Yes or No ').lower()
-        notes = raw_input('Please add your notes here: ').capitalize()
+        notes = raw_input('Add notes here: ').capitalize()
         
         # Write the data to to separate file in CSV format 
         w.writerow([status, food, ' - ' + notes, st, reaction])
@@ -79,7 +78,7 @@ def add():
 # Parse CSV file for all entries that were labeled as Not GF
 def show_not_gluten():
     f = open(fullPath, 'r+')
-    print 'The following foods are NOT Gluten Free:\n' + '-'*30
+    print 'The following entries have food containing Gluten:\n' + '-'*30
     for row in csv.DictReader(f):
         tsn = str(row['TIME'])
         if row['GLUTENFREE'] == 'no':
@@ -89,7 +88,7 @@ def show_not_gluten():
 # Parse CSV file for all entries that were labeled as GF
 def show_yes_gluten():
     f = open(fullPath, 'r+')
-    print 'The following foods are ARE Gluten Free:\n' + '-'*30
+    print 'The following entries have food that is Gluten Free:\n' + '-'*30
     for row in csv.DictReader(f):
         tsn = str(row['TIME'])
         if row['GLUTENFREE'] == 'yes':
@@ -108,7 +107,7 @@ def negative_reaction():
 
 # Search for entries by food type.  Will output any prior reactions 
 def search_for_food():
-    search_word = str(raw_input('Which food would you like to search for? ').capitalize())
+    search_word = str(raw_input('Which food entry would you like to search for? ').capitalize())
     f = open(fullPath, 'r+') 
     searching = list(csv.DictReader(f))
     temp = []
@@ -130,16 +129,16 @@ def search_for_food():
                     
                     # Checking if there was a negative reaction 
                     if reaction == 'yes':
-                        print search_word + ' are GF and you had a bad reaction'
+                        print search_word + ' entry is Gluten Free and you had a bad reaction'
                     if reaction == 'no':
-                        print search_word + ' are GF and you did not have a bad reaction' 
+                        print search_word + ' entry is Gluten Free and you did not have a bad reaction' 
                     break
                     
                 if i == 'no':
                     if reaction == 'yes':
-                        print search_word + ' are NOT GF and you had a bad reaction'
+                        print search_word + ' entry is NOT Gluten Free and you had a bad reaction'
                     if reaction == 'no':
-                        print search_word + ' are NOT GF and you did not have a bad reaction'
+                        print search_word + ' entry is NOT Gluten Free and you did not have a bad reaction'
                     #print search_word + ' is not GF ' + reaction
                     break
         else:
