@@ -61,12 +61,12 @@ def start():
 # Function that adds new entries
 def add():
     
-    with open('/Users/tonygardella/Desktop/pythonCoding/gluten.csv', 'a') as f:
+    with open(fullPath, 'a') as f:
         temp = []
         w = csv.writer(f) # quoting=csv.QUOTE_ALL
         food = raw_input("Which food item would you like to add? ").capitalize()
         
-        f = open('/Users/tonygardella/Desktop/pythonCoding/gluten.csv', 'r')
+        f = open(fullPath, 'r')
         
         # Get the user's input and data
         status = raw_input('Is this supposed to be Gluten Free?: ').lower()
@@ -78,7 +78,7 @@ def add():
 
 # Parse CSV file for all entries that were labeled as Not GF
 def show_not_gluten():
-    f = open('/Users/tonygardella/Desktop/pythonCoding/gluten.csv', 'r+')
+    f = open(fullPath, 'r+')
     print 'The following foods are NOT Gluten Free:\n' + '-'*30
     for row in csv.DictReader(f):
         tsn = str(row['TIME'])
@@ -88,7 +88,7 @@ def show_not_gluten():
 
 # Parse CSV file for all entries that were labeled as GF
 def show_yes_gluten():
-    f = open('/Users/tonygardella/Desktop/pythonCoding/gluten.csv', 'r+')
+    f = open(fullPath, 'r+')
     print 'The following foods are ARE Gluten Free:\n' + '-'*30
     for row in csv.DictReader(f):
         tsn = str(row['TIME'])
@@ -98,7 +98,7 @@ def show_yes_gluten():
 
 # Parse CSV file for all entries that were reported to have a negative side effect
 def negative_reaction():
-    f = open('/Users/tonygardella/Desktop/pythonCoding/gluten.csv', 'r+')
+    f = open(fullPath, 'r+')
     print 'The following foods have given you a negative reaction:\n' + '-'*30
     for row in csv.DictReader(f):
         tsn = str(row['TIME'])
@@ -109,7 +109,7 @@ def negative_reaction():
 # Search for entries by food type.  Will output any prior reactions 
 def search_for_food():
     search_word = str(raw_input('Which food would you like to search for? ').capitalize())
-    f = open('/Users/tonygardella/Desktop/pythonCoding/gluten.csv', 'r+') 
+    f = open(fullPath, 'r+') 
     searching = list(csv.DictReader(f))
     temp = []
     print '-'*30
