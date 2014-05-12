@@ -16,6 +16,15 @@ KEY = 'GLUTENFREE,FOOD,NOTES,TIME,REACTION'
 ts = time.time()
 st = datetime.datetime.fromtimestamp(ts).strftime('%m-%d-%Y %H:%M')
 
+# Set up colors for the terminal output
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+
 # Checks to see if file exists and creates it if it doesn't
 if not os.path.exists(fullPath):
     open(fullPath, 'w').close()
@@ -78,31 +87,31 @@ def add():
 # Parse CSV file for all entries that were labeled as Not GF
 def show_not_gluten():
     f = open(fullPath, 'r+')
-    print 'The following entries have food containing Gluten:\n' + '-'*30
+    print 'The following entries have food containing {0}Gluten{1}:\n'.format(bcolors.WARNING, bcolors.ENDC) + '-'*30
     for row in csv.DictReader(f):
         tsn = str(row['TIME'])
         if row['GLUTENFREE'] == 'no':
-            print ' >  ' + tsn + ' : ' + row['FOOD'] + row['NOTES']
+            print ' >  ' + tsn + ' : {0}'.format(bcolors.WARNING) + row['FOOD'] + '{0}'.format(bcolors.ENDC) + row['NOTES'] 
     print '-'*30
 
 # Parse CSV file for all entries that were labeled as GF
 def show_yes_gluten():
     f = open(fullPath, 'r+')
-    print 'The following entries have food that is Gluten Free:\n' + '-'*30
+    print 'The following entries have food that is {0}Gluten Free{1}:\n'.format(bcolors.OKGREEN, bcolors.ENDC) + '-'*30
     for row in csv.DictReader(f):
         tsn = str(row['TIME'])
         if row['GLUTENFREE'] == 'yes':
-            print ' >  ' + tsn + ' : ' + row['FOOD'] + row['NOTES']
+            print ' >  ' + tsn + ' : {0}'.format(bcolors.OKGREEN) + row['FOOD'] + '{0}'.format(bcolors.ENDC) + row['NOTES']
     print '-'*30
 
 # Parse CSV file for all entries that were reported to have a negative side effect
 def negative_reaction():
     f = open(fullPath, 'r+')
-    print 'The following foods have given you a negative reaction:\n' + '-'*30
+    print 'The following foods have given you a {0}negative reaction{1}:\n'.format(bcolors.FAIL, bcolors.ENDC) + '-'*30
     for row in csv.DictReader(f):
         tsn = str(row['TIME'])
         if row['REACTION'] == 'yes':
-            print ' >  ' + tsn + ' : ' + row['FOOD'] + row['NOTES']
+            print ' >  ' + tsn + ' : {0}'.format(bcolors.FAIL) + row['FOOD'] + '{0}'.format(bcolors.ENDC) + row['NOTES']
     print '-'*30
 
 # Search for entries by food type.  Will output any prior reactions 
@@ -129,16 +138,16 @@ def search_for_food():
                     
                     # Checking if there was a negative reaction 
                     if reaction == 'yes':
-                        print search_word + ' entry is Gluten Free and you had a bad reaction'
+                        print '{0}'.format(bcolors.OKGREEN) + search_word + '{1} are GF and you had a {0}bad reaction{1}'.format(bcolors.FAIL, bcolors.ENDC)
                     if reaction == 'no':
-                        print search_word + ' entry is Gluten Free and you did not have a bad reaction' 
+                        print '{0}'.format(bcolors.OKGREEN) + search_word + '{1} are GF and you were {0}fine!{1}'.format(bcolors.OKGREEN, bcolors.ENDC) 
                     break
                     
                 if i == 'no':
                     if reaction == 'yes':
-                        print search_word + ' entry is NOT Gluten Free and you had a bad reaction'
+                        print '{0}'.format(bcolors.FAIL) + search_word + '{1} are NOT GF and you had a {0}bad reaction{1}'.format(bcolors.FAIL, bcolors.ENDC)
                     if reaction == 'no':
-                        print search_word + ' entry is NOT Gluten Free and you did not have a bad reaction'
+                        print '{0}'.format(bcolors.FAIL) + search_word + '{1} are NOT GF and you were {0}fine!{1}'.format(bcolors.OKGREEN, bcolors.ENDC) 
                     #print search_word + ' is not GF ' + reaction
                     break
         else:
